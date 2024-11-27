@@ -12,14 +12,22 @@ namespace Data
     {
         public DbSet<Client> Client { get; set; }
         public DbSet<Master> Master { get; set; }
+
         public AppDbContext()
+        {
+            
+        }
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
             
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=Matebook;Database=FinalDemo;TrustServerCertificate=True;Trusted_Connection=True");
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer("Server=Matebook;Database=FinalDemo;TrustServerCertificate=True;Trusted_Connection=True");
+            }
         }
     }
 }

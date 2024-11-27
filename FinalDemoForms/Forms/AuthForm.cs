@@ -1,4 +1,5 @@
 ﻿using Data;
+using FinalDemoForms.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -29,9 +30,9 @@ namespace FinalDemoForms
 
             using (var context = new AppDbContext())
             {
-                var user = context.Master.FirstOrDefault(u => u.MasterLogin == login && u.MasterPassword == password);
-
-                if (user != null)
+                
+                var authService = new AuthService(context);
+                if (authService.Authenticate(login, password))
                 {
                     var mainForm = new MainForm();
                     mainForm.Show();
